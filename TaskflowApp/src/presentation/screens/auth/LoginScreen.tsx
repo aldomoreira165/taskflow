@@ -1,66 +1,70 @@
-import { Button, Input, Layout, Text, Icon } from "@ui-kitten/components"
-import { useWindowDimensions } from "react-native"
+import { Input } from "@ui-kitten/components"
+import { Image, useWindowDimensions, View, Text } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { CustomIcon } from "../../components/ui/CustomIcon";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParams } from "../../navigation/StackNavigator";
+import { globalColors, globalStyles } from "../../theme/global.styles";
+import { CustomButton } from "../../components/ui/CustomButton";
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { };
+
+export const LoginScreen = ({ navigation }: Props) => {
 
   const { height } = useWindowDimensions();
 
   return (
-    <Layout style={{ flex: 1 }}>
-      <ScrollView style={{ marginHorizontal: 40 }}>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={globalStyles.container}>
 
+        <View style={globalStyles.containerCenter}>
+          <View style={[globalStyles.header, { paddingTop: height * 0.10 }]}>
+            <Image
+              source={require('../../../assets/logo.png')}
+              style={globalStyles.logo}
+              resizeMode="contain"
+            />
+          </View>
 
-        <Layout style={{ paddingTop: height * 0.35 }}>
-          <Text category="h1">TaskFlow</Text>
-          <Text category="p2">Por favor, ingrese para continuar</Text>
-        </Layout>
+          <View style={globalStyles.containerCenter}>
+            <Text style={globalStyles.mainTitle}>TaskFlow</Text>
+            <Text style={globalStyles.mainSubtitle}>Tu día productivo comienza aquí</Text>
+          </View>
+        </View>
 
-        <Layout style={{ marginTop: 20 }}>
+        <View style={ globalStyles.containerCenter }>
           <Input
             placeholder="Nombre de usuario"
             autoCapitalize="none"
-            accessoryLeft={<CustomIcon name="people-outline" />}
-            style={{ marginBottom: 10 }}
+            accessoryLeft={<CustomIcon name="at-outline" fill={ globalColors.danger } />}
+            style={ globalStyles.mainInput }
           />
 
           <Input
             placeholder="Contraseña"
             autoCapitalize="none"
             secureTextEntry
-            accessoryLeft={<CustomIcon name="lock-closed-outline" />}
-            style={{ marginBottom: 10 }}
+            accessoryLeft={<CustomIcon name="lock-closed-outline"  fill={ globalColors.primary }/>}
+            style={ globalStyles.mainInput }
           />
-        </Layout>
+        </View>
 
-        <Layout style={{ height: 20 }} />
-
-        <Layout>
-          <Button
+        <View>
+          <CustomButton
+            label='Iniciar Sesión'
             onPress={() => { }}
-            appearance="filled"
-          >
-            Ingresar
-          </Button>
-        </Layout>
+          />
+        </View>
 
-        <Layout style={{ height: 50 }} />
-
-        <Layout style={{
-          alignItems: 'flex-end',
-          flexDirection: 'row',
-          justifyContent: 'center'
-        }}>
-          <Text>¿No tienes una cuenta?</Text>
+        <View style={[globalStyles.containerCenter, { flexDirection: 'row' }]}>
+          <Text style={globalStyles.mainSubtitle}>¿No tienes una cuenta?</Text>
           <Text
-            status="primary"
-            category="s1"
-            onPress={() => { }}
+            onPress={() => { navigation.navigate('RegisterScreen') }}
+            style={[globalStyles.mainSubtitle, { color: globalColors.accent, fontWeight: '600' }]}
           > ¡Registrate!</Text>
-        </Layout>
+        </View>
 
       </ScrollView>
-    </Layout>
+    </View>
   )
 }
