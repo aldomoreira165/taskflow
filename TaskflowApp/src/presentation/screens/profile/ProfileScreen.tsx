@@ -1,9 +1,9 @@
 import { Text, View } from "react-native"
 
-export const ProjectScreen = () => {
+export const ProfileScreen = () => {
   return (
     <View>
-        <Text>ProjectScreen</Text>
+        <Text>ProfileScreen</Text>
     </View>
   )
 }

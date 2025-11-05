@@ -34,7 +34,7 @@ export const LoginScreen = ({ navigation }: Props) => {
     if ( wasSuccessful ) {
       navigation.reset({
         index: 0,
-        routes:[{ name: 'HomeScreen' }]
+        routes:[{ name: 'ProjecstScreen' }]
       })
       
       return;

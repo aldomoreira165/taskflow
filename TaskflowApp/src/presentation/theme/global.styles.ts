@@ -63,5 +63,19 @@ export const globalStyles = StyleSheet.create({
     mainInput: {
         height: 60,
         borderRadius: 12,
-    }
+    },
+    containerHeader: {
+        backgroundColor: globalColors.secondary
+    },
+    containerCardContent: {
+        backgroundColor: globalColors.textSecondary,
+        borderRadius: 25,
+        marginTop: -24, 
+        zIndex: 10,
+        elevation: 8,
+        shadowColor: globalColors.textPrimary,
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        shadowOffset: { width: 0, height: 6 },
+    },
 })
