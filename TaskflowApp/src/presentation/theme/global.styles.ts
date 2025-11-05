@@ -47,13 +47,11 @@ export const globalStyles = StyleSheet.create({
         color: globalColors.textSecondary
     },
     mainButton: {
-        width: '100%',
         height: 60,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: globalColors.accent,
-        marginBottom: 10,
     },
     mainButtonText: {
         color: globalColors.textSecondary,
@@ -68,6 +66,7 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: globalColors.secondary
     },
     containerCardContent: {
+        padding: 10,
         backgroundColor: globalColors.textSecondary,
         borderRadius: 25,
         marginTop: -24, 

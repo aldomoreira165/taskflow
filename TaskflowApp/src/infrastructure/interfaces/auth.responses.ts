@@ -10,3 +10,15 @@ export interface Response {
     Nombre:    string;
     Usuario:   string;
 }
+
+export interface RegisterResponse {
+    status:   string;
+    response: Response;
+}
+
+export interface Response {
+    UsuarioID: number;
+    Password:  string;
+    Nombre:    string;
+    Usuario:   string;
+}

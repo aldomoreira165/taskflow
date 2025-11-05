@@ -1,6 +1,6 @@
 import { taskflowApi } from "../../config/api/taskflowApi";
 import { User } from "../../domain/entities/user";
-import type { AuthResponse } from "../../infrastructure/interfaces/auth.responses";
+import type { AuthResponse, RegisterResponse } from "../../infrastructure/interfaces/auth.responses";
 
 const returnUserToken = (data: AuthResponse) => {
 
@@ -29,6 +29,49 @@ export const authLogin = async (Usuario: string, Password: string) => {
 
     } catch (error) {
         console.log(error);
+        return null;
+    }
+}
+
+export const authRegister = async (Password: string, Nombre: string, Usuario: string) => {
+    try {
+
+        await taskflowApi.post<RegisterResponse>('/usuarios/', {
+            Password,
+            Nombre,
+            Usuario
+        })
+
+        return true;
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const authCheckStatus = async () => {
+    try {
+
+        const { data } = await taskflowApi.post<AuthResponse>('/auth/renew');
+
+        return returnUserToken(data);
+
+    } catch (error) {
+        console.log(error)
+        return null;
+    }
+}
+
+export const authLogout = async () => {
+    try {
+
+        await taskflowApi.delete('/auth/logout');
+
+        return true;
+
+    } catch (error) {
+        console.log(error)
         return null;
     }
 }

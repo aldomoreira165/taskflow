@@ -18,6 +18,7 @@ const crearUsuario = async (req, res) => {
 
     const response = await sequelize.query(query, {
       type: QueryTypes.SELECT,
+      plain: true,
       replacements: {
         Password: contraseñaEncriptada,
         Nombre,

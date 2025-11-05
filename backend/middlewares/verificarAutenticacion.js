@@ -1,7 +1,8 @@
 const { verificarToken } = require('./../helpers/handleToken');
 const sequelize = require("../config/db");
+const { QueryTypes } = require('sequelize');
 
-const verificarAuth = async(req, res, next) => {
+const verificarAuth = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ').pop();
         const tokenData = await verificarToken(token);
@@ -33,10 +34,16 @@ const verificarAuth = async(req, res, next) => {
     }
 };
 
-const buscarToken = async(token) => {
+const buscarToken = async (Token) => {
     try {
-        const [results, _] = await sequelize.query(`EXEC p_obtenerToken @token = '${token}'`);
-        return results;
+        const response = await sequelize.query(`EXEC SP_Token_ListarPorToken @Token = :Token`, {
+            type: QueryTypes.SELECT,
+            replacements: {
+                Token
+            }
+        });
+
+        return response;
     }
     catch (error) {
         console.log(error);

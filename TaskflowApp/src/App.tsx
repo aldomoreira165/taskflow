@@ -4,7 +4,8 @@ import * as eva from '@eva-design/eva';
 import { NavigationContainer } from "@react-navigation/native"
 import { StackNavigator } from "./presentation/navigation/StackNavigator"
 import { useColorScheme } from 'react-native';
-import { IonIconsPack } from './presentation/theme/ion-icons'; 
+import { IonIconsPack } from './presentation/theme/ion-icons';
+import { AuthProvider } from './presentation/providers/AuthProvider';
 
 export const App = () => {
 
@@ -19,7 +20,9 @@ export const App = () => {
         {...eva} theme={theme}
       >
         <NavigationContainer>
-          <StackNavigator />
+          <AuthProvider>
+            <StackNavigator />
+          </AuthProvider>
         </NavigationContainer>
       </ApplicationProvider>
     </>

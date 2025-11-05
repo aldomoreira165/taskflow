@@ -31,14 +31,7 @@ export const LoginScreen = ({ navigation }: Props) => {
     const wasSuccessful = await login(form.usuario, form.password);
     setIsLoading(false)
 
-    if ( wasSuccessful ) {
-      navigation.reset({
-        index: 0,
-        routes:[{ name: 'ProjecstScreen' }]
-      })
-      
-      return;
-    };
+    if ( wasSuccessful ) return;
 
     Alert.alert('Error', 'Usuario o contraseña incorrectos')
 
