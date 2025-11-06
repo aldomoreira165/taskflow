@@ -1,19 +1,20 @@
 import { StyleSheet } from "react-native";
 
 export const globalColors = {
-    primary: '#6C63FF',      // Azul violeta acento - botones principales, logo
-    secondary: '#3A0CA3',    // Púrpura profundo - headers, fondos secundarios
-    accent: '#FF5D8F',       // Rosa acento - botones de acción o enlaces destacados
-    highlight: '#48CAE4',    // Cyan suave - íconos, detalles interactivos
-    success: '#2ECC71',      // Verde éxito - tareas completadas
-    warning: '#F1C40F',      // Amarillo advertencia - tareas en progreso
-    danger: '#E74C3C',       // Rojo alerta - errores o bloqueos
-    textPrimary: '#1E1E1E',  // Texto principal oscuro
-    textSecondary: '#F4F6F8',// Texto secundario o labels
-    border: '#E0E0E0',       // Líneas y bordes suaves
-    background: '#FFFFFF',   // Fondo principal blanco
-    gradientStart: '#3A0CA3',// Gradiente inicial (púrpura)
-    gradientEnd: '#6C63FF',  // Gradiente final (azul violeta)
+    primary: '#6C63FF',
+    secondary: '#3A0CA3',
+    accent: '#FF5D8F', 
+    highlight: '#48CAE4',
+    success: '#2ECC71',      
+    warning: '#F1C40F',      
+    danger: '#E74C3C',       
+    textPrimary: '#1E1E1E',  
+    textSecondary: '#F4F6F8',
+    border: '#E0E0E0',      
+    background: '#FFFFFF',  
+    backgroundSecondary: '#00000010', 
+    gradientStart: '#3A0CA3',
+    gradientEnd: '#6C63FF',
 };
 
 export const globalStyles = StyleSheet.create({
@@ -63,13 +64,14 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 12,
     },
     containerHeader: {
-        backgroundColor: globalColors.secondary
+        backgroundColor: globalColors.gradientStart
     },
     containerCardContent: {
+        flex: 1,
         padding: 10,
         backgroundColor: globalColors.textSecondary,
         borderRadius: 25,
-        marginTop: -24, 
+        marginTop: -24,
         zIndex: 10,
         elevation: 8,
         shadowColor: globalColors.textPrimary,
@@ -77,4 +79,19 @@ export const globalStyles = StyleSheet.create({
         shadowRadius: 12,
         shadowOffset: { width: 0, height: 6 },
     },
+    cardEmptyList: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 24,
+        gap: 8,
+    },
+    iconEmptyList: {
+        width: 80, 
+        height: 80, 
+        borderRadius: 40,
+        backgroundColor: globalColors.backgroundSecondary, 
+        alignItems: 'center', 
+        justifyContent: 'center',
+    }
 })

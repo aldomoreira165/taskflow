@@ -98,7 +98,7 @@ const renew = async (req, res) => {
         const newToken = await generarToken(newPayload);
 
         await sequelize.query(`EXEC SP_Tokens_Crear @Token = :Token`, {
-            type: QueryTypes.INSERT,
+            type: QueryTypes.SELECT,
             replacements: { Token: newToken },
         });
 
@@ -123,7 +123,7 @@ const logout = async (req, res) => {
         const token = req.headers.authorization.split(' ').pop();
 
         await sequelize.query(`EXEC SP_Tokens_Eliminar @token = :token`, {
-            type: QueryTypes.DELETE,
+            type: QueryTypes.SELECT,
             replacements: {
                 token
             }

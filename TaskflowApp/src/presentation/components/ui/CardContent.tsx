@@ -7,7 +7,7 @@ export const CardContent = ({ children }: PropsWithChildren) => {
     const { height } = useWindowDimensions();
 
     return (
-        <View style={[globalStyles.containerCardContent, { height: height * 0.70 }]}>
+        <View style={[globalStyles.containerCardContent, { flex: 1, minHeight: height * 0.7 }]}>
             { children }
         </View>
     )

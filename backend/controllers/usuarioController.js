@@ -124,85 +124,9 @@ const obtenerUsuarioId = async (req, res) => {
   }
 };
 
-const obtenerUsuarioActivo = async (req, res) => {
-  try {
-    const [results, _] = await sequelize.query(`EXEC p_obtenerUsuariosActivos`);
-
-    res.status(200).json({
-      estado: "exito",
-      data: results,
-    });
-  } catch (error) {
-    res.status(400).json({
-      estado: "error",
-      mensajesss: error.message,
-    });
-  }
-}
-
-const obtenerUsuarioInactivo = async (req, res) => {
-  try {
-    const [results, _] = await sequelize.query(`EXEC p_obtenerUsuariosInactivos`);
-
-    res.status(200).json({
-      estado: "exito",
-      data: results,
-    });
-  } catch (error) {
-    res.status(400).json({
-      estado: "error",
-      mensaje: error.message,
-    });
-  }
-};
-
-const activarUsuario = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const [results, _] = await sequelize.query(
-      `EXEC p_activarUsuario @idUsuarios = ${parseInt(id, 10)}`
-    );
-
-    res.status(200).json({
-      estado: "exito",
-      data: results,
-    });
-  } catch (error) {
-    res.status(400).json({
-      estado: "error",
-      mensaje: error.message,
-    });
-  }
-};
-
-const inactivarUsuario = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const [results, _] = await sequelize.query(
-      `EXEC p_inactivarUsuario @idUsuarios = ${parseInt(id, 10)}`
-    );
-
-    res.status(200).json({
-      estado: "exito",
-      data: results,
-    });
-  } catch (error) {
-    res.status(400).json({
-      estado: "error",
-      mensaje: error.message,
-    });
-  }
-};
-
 module.exports = {
   crearUsuario,
   actualizarUsuario,
   obtenerUsuarios,
   obtenerUsuarioId,
-  obtenerUsuarioActivo,
-  obtenerUsuarioInactivo,
-  activarUsuario,
-  inactivarUsuario,
 };

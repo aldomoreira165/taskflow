@@ -25,9 +25,9 @@ export const BottomTabsNavigator = () => {
                 tabBarStyle: {
                     borderTopWidth: 0,
                     elevation: 10,
-                    height: 140,
+                    height: 120,
                     borderRadius: 25,
-                    paddingTop: 30,
+                    paddingTop: 20,
                 },
                 tabBarHideOnKeyboard: true,
             }}
