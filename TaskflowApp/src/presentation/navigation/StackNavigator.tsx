@@ -10,7 +10,7 @@ export type RootStackParams = {
   LoginScreen: undefined;
   RegisterScreen: undefined;
   ProjecstScreen: undefined;
-  ProjectScreen: { projectID?: number };
+  ProjectScreen: { projectID?: number | undefined };
 }
 
 const Stack = createStackNavigator<RootStackParams>();

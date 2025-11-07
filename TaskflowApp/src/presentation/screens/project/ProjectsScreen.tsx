@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query"
 import { ProjectList } from "../../components/projects/ProjectList"
 
 export const ProjecstScreen = () => {
-  
+
   const { user } = useAuthStore();
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -21,11 +21,11 @@ export const ProjecstScreen = () => {
 
   const { isLoading, data: projects = [] } = useQuery({
     queryKey: ['projects', user?.UsuarioID],
-    staleTime: 1000 * 60 * 5, 
+    staleTime: 1000 * 60 * 5,
     queryFn: () => getProjects(),
-    enabled: !!user, 
+    enabled: !!user,
   });
-  
+
   const onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
     const y = Math.floor(nativeEvent?.contentOffset?.y ?? 0);
     setIsExtended(y <= 0);
@@ -58,7 +58,7 @@ export const ProjecstScreen = () => {
           extended={isExtended}
           style={{ bottom: 115, right: 0 }}
           visible
-          onPress={() => navigation.navigate('ProjectScreen')}
+          onPress={() => navigation.navigate('ProjectScreen', {})}
         />
 
       </CardContent>
