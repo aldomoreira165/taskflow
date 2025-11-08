@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, View } from "react-native"
+import { NativeScrollEvent, NativeSyntheticEvent, Text, View } from "react-native"
 import { Header } from "../../components/ui/Header"
 import { CardContent } from "../../components/ui/CardContent"
 import { globalColors, globalStyles } from "../../theme/global.styles"

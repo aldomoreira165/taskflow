@@ -1,18 +1,13 @@
 import { taskflowApi } from "../../config/api/taskflowApi";
 import { Project } from "../../domain/entities/project";
-import { Response } from "../../infrastructure/interfaces/projects.responses";
+import { ProjectDetailResponse } from "../../infrastructure/interfaces/projects.responses";
 
 export const updateCreateProject = (project: Partial<Project>) => {
-
-    if (project.ProyectoID) {
-        return updateProject(project);
-    }
-
+    if (project.ProyectoID) return updateProject(project);
     return createProject(project)
-
 }
 
-const updateProject = async (project: Partial<Response>) => {
+const updateProject = async (project: Partial<ProjectDetailResponse>) => {
     const { ProyectoID, ...rest } = project;
 
     try {
@@ -29,7 +24,7 @@ const updateProject = async (project: Partial<Response>) => {
 
 }
 
-const createProject = async (project: Partial<Response>) => {
+const createProject = async (project: Partial<ProjectDetailResponse>) => {
     const { ProyectoID, ...rest } = project;
 
     try {

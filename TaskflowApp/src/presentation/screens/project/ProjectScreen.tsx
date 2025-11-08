@@ -4,17 +4,21 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParams } from "../../navigation/StackNavigator"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getProjectById } from "../../../actions/projects/get-project-by-id"
-import { Datepicker, Input, Layout } from "@ui-kitten/components"
+import { Datepicker, IndexPath, Input, Layout, Select, SelectItem } from "@ui-kitten/components"
 import { CustomButton } from "../../components/ui/CustomButton"
 import { CustomIcon } from "../../components/ui/CustomIcon"
 
 import { Formik } from "formik";
 import { Project } from "../../../domain/entities/project"
 import { updateCreateProject } from "../../../actions/projects/update-create-project"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import { useAuthStore } from "../../store/auth/useAuthStore"
+import { getUsers } from "../../../actions/users/get-users"
 
 interface Props extends StackScreenProps<RootStackParams, 'ProjectScreen'> { };
+
+type Option = { id: number; label: string };
+type UserRow = { UsuarioID: number; Nombre: string };
 
 export const ProjectScreen = ({ route }: Props) => {
     const { user } = useAuthStore();
@@ -27,6 +31,16 @@ export const ProjectScreen = ({ route }: Props) => {
         enabled: projectIdRef.current !== undefined,
     });
 
+    const { data: usersRaw = [] as UserRow[] } = useQuery<UserRow[]>({
+        queryKey: ["users", "all"],
+        queryFn: getUsers,
+    });
+
+    const users: Option[] = useMemo(
+        () => usersRaw.map(u => ({ id: Number(u.UsuarioID), label: String(u.Nombre).trim() })),
+        [usersRaw]
+    );
+
     const mutation = useMutation({
         mutationFn: (data: Project) => updateCreateProject({ ...data, ProyectoID: projectIdRef.current }),
         onSuccess: (data: Project) => {
@@ -36,17 +50,29 @@ export const ProjectScreen = ({ route }: Props) => {
         },
     })
 
-    if (projectIdRef.current && !project) return <MainLayout title="cargando" />;
+    const idsToIndexPaths = (ids: number[], options: Option[]) =>
+        ids
+            .map(id => new IndexPath(options.findIndex(o => o.id === id)))
+            .filter(ip => ip.row >= 0);
+
+
+    const indexPathsToIds = (index: IndexPath | IndexPath[], options: Option[]) => {
+        const arr = Array.isArray(index) ? index : [index];
+        return arr.map(ip => options[ip.row]?.id).filter(Boolean) as number[];
+    };
 
     const initialValues = {
         Nombre: project?.Nombre ?? "",
         Descripcion: project?.Descripcion ?? "",
         FechaInicio: project?.FechaInicio ? new Date(project.FechaInicio) : undefined as Date | undefined,
         FechaEntrega: project?.FechaEntrega ? new Date(project.FechaEntrega) : undefined as Date | undefined,
+        MiembrosUsuarioIDs: project?.MiembrosUsuarioIDs ?? [],
     };
 
     const fmt = (d?: Date) =>
         d ? d.toLocaleDateString("es-GT", { year: "numeric", month: "2-digit", day: "2-digit" }) : "";
+
+    if (projectIdRef.current && !project) return <MainLayout title="cargando" />;
 
     return (
         <Formik
@@ -107,6 +133,30 @@ export const ProjectScreen = ({ route }: Props) => {
                                             : fmt(values.FechaEntrega)
                                     }
                                 />
+                                <Select
+                                    label="Miembros del proyecto"
+                                    multiSelect
+                                    selectedIndex={idsToIndexPaths(values.MiembrosUsuarioIDs, users)}
+                                    onSelect={(index) => {
+                                        const ids = indexPathsToIds(index, users);
+                                        setFieldValue("MiembrosUsuarioIDs", ids);
+                                    }}
+                                    placeholder="Selecciona miembros"
+                                    accessoryLeft={() => <CustomIcon name="people-outline" />}
+                                    style={{ marginVertical: 6 }}
+                                    value={
+                                        (() => {
+                                            const labels = (values.MiembrosUsuarioIDs ?? [])
+                                                .map((id: number) => users.find(u => u.id === id)?.label)
+                                                .filter(Boolean) as string[];
+                                            return labels.length ? labels.join(", ") : "—";
+                                        })()
+                                    }
+                                >
+                                    {users.map(u => (
+                                        <SelectItem key={u.id} title={u.label} />
+                                    ))}
+                                </Select>
 
                                 <View style={{ height: 12 }} />
 

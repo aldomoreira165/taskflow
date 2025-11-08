@@ -16,8 +16,8 @@ const STATUS: Record<number, { label: string; color: string; bg: string }> = {
     3: { label: 'Completado', color: '#065F46', bg: '#D1FAE5' },
 };
 
-const getStatus = (estadoID?: number) =>
-    STATUS[estadoID ?? 1] ?? STATUS[1];
+const getStatus = (estadoID: number) =>
+    STATUS[estadoID ?? 1];
 
 const formatDate = (dateProject: string) => {
     if (!dateProject) return '—';
@@ -26,19 +26,12 @@ const formatDate = (dateProject: string) => {
 };
 
 export const ProjectCard = ({ project }: Props) => {
-    
+
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
     const statusProject = getStatus(project.EstadoID);
 
-    const progress =
-        typeof (project as any).Progreso === 'number'
-            ? (project as any).Progreso
-            : project.EstadoID === 3
-                ? 1
-                : project.EstadoID === 2
-                    ? 0.6
-                    : 0.15;
+    const progress = 0.5;
 
     return (
         <Card
@@ -52,7 +45,7 @@ export const ProjectCard = ({ project }: Props) => {
                 </Text>
 
                 <View style={styles.row}>
-                    
+
                     <View style={styles.metaLeft}>
                         <Text variant="labelSmall" style={styles.metaLabel}>
                             Fecha entrega

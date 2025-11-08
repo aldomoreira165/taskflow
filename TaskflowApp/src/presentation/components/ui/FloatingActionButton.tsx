@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleProp, ViewStyle, StyleSheet } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import { AnimatedFAB } from 'react-native-paper';
-import { globalColors } from '../../theme/global.styles';
+import { globalColors, globalStyles } from '../../theme/global.styles';
 
 type AnimateFrom = 'left' | 'right';
 type IconMode = 'static' | 'dynamic';
@@ -38,7 +38,7 @@ const FloatingActionButton: React.FC<Props> = ({
       visible={visible}
       animateFrom={animateFrom}
       iconMode={iconMode}
-      style={[styles.fabStyle, style, fabSideStyle, { backgroundColor: globalColors.accent }]}
+      style={[globalStyles.fab, style, fabSideStyle, { backgroundColor: globalColors.accent }]}
       color={globalColors.textSecondary}
     />
   );
@@ -46,10 +46,3 @@ const FloatingActionButton: React.FC<Props> = ({
 
 export default FloatingActionButton;
 
-const styles = StyleSheet.create({
-  fabStyle: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-  },
-});

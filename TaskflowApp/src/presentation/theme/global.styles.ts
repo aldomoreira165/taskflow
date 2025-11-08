@@ -111,5 +111,10 @@ export const globalStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: globalColors.border
+    },
+    fab: {
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
     }
 })

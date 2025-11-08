@@ -1,18 +1,20 @@
 
 export interface Project {
-    ProyectoID: number;
-    Nombre: string;
-    FechaInicio: Date;
-    FechaEntrega: Date;
-    EstadoID: number;
-    UsuarioCreadorID: number;
-    Descripcion: string;
+  ProyectoID: number;
+  Nombre: string;
+  FechaInicio: Date;
+  FechaEntrega: Date;
+  EstadoID: number;
+  UsuarioCreadorID: number;
+  Descripcion: string;
+  Miembros?: string;
+  MiembrosUsuarioIDs?: number[];
 }
 
-export interface  ProjectUpsertDTO {
+export interface ProjectUpsertDTO {
   ProyectoID?: number | null;
   Nombre: string;
   Descripcion: string;
-  FechaInicio?: Date | null;  
+  FechaInicio?: Date | null;
   FechaEntrega?: Date | null;
 };

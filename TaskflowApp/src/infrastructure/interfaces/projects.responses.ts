@@ -5,10 +5,10 @@ export interface ProjectResponse {
 
 export interface TaskFlowProduct {
     status: string;
-    response: Response;
+    response: ProjectDetailResponse;
 }
 
-export interface Response {
+export interface ProjectDetailResponse {
     ProyectoID: number;
     Nombre: string;
     FechaInicio: Date;
@@ -16,4 +16,6 @@ export interface Response {
     EstadoID: number;
     UsuarioCreadorID: number;
     Descripcion: string;
+    Miembros?: string; 
+    MiembrosUsuarioIDsJson?: string; 
 }

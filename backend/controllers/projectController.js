@@ -56,7 +56,7 @@ const create = async (req, res) => {
 
     try {
 
-        const { Nombre, FechaInicio, FechaEntrega, Descripcion } = req.body;
+        const { Nombre, FechaInicio, FechaEntrega, Descripcion, MiembrosUsuarioIDs = [] } = req.body;
 
         const UsuarioCreadorID = req.usuario.id;
 
@@ -66,7 +66,8 @@ const create = async (req, res) => {
                 @FechaInicio = :FechaInicio,
                 @FechaEntrega = :FechaEntrega,
                 @UsuarioCreadorID = :UsuarioCreadorID,
-                @Descripcion = :Descripcion
+                @Descripcion = :Descripcion,
+                @MiembrosJson   = :MiembrosJson
         `;
 
         const response = await sequelize.query(query, {
@@ -77,7 +78,8 @@ const create = async (req, res) => {
                 FechaInicio,
                 FechaEntrega,
                 UsuarioCreadorID,
-                Descripcion
+                Descripcion,
+                MiembrosJson: JSON.stringify(MiembrosUsuarioIDs),
             }
         })
 
@@ -98,7 +100,7 @@ const update = async (req, res) => {
     try {
 
         const { ProyectoID } = req.params;
-        const { Nombre, FechaInicio, FechaEntrega, Descripcion } = req.body;
+        const { Nombre, FechaInicio, FechaEntrega, Descripcion, MiembrosUsuarioIDs = [] } = req.body;
 
         const query = `
             EXEC SP_Proyectos_Editar
@@ -106,7 +108,8 @@ const update = async (req, res) => {
                 @Nombre = :Nombre,
                 @FechaInicio = :FechaInicio,
                 @FechaEntrega = :FechaEntrega,
-                @Descripcion = :Descripcion
+                @Descripcion = :Descripcion,
+                @MiembrosJson   = :MiembrosJson
         `;
 
         const response = await sequelize.query(query, {
@@ -117,7 +120,8 @@ const update = async (req, res) => {
                 Nombre,
                 FechaInicio,
                 FechaEntrega,
-                Descripcion
+                Descripcion,
+                MiembrosJson: JSON.stringify(MiembrosUsuarioIDs),
             }
         })
 
