@@ -13,3 +13,16 @@ export const getProjects = async () => {
     }
 
 }
+
+export const getAllProjects = async () => {
+
+    try {
+        const { data } = await taskflowApi.get('/projects/get-all');
+
+        return data.response;
+
+    } catch (error) {
+        console.log(error)        
+    }
+
+}

@@ -79,16 +79,19 @@ const actualizarUsuario = async (req, res) => {
 
 const obtenerUsuarios = async (req, res) => {
   try {
-    const [results, _] = await sequelize.query(`EXEC p_obtenerUsuarios`);
 
-    res.status(200).json({
-      estado: "exito",
-      data: results,
+    const response = await sequelize.query('EXEC SP_Usuarios_Listar', {
+      type: QueryTypes.SELECT
+    })
+
+    return res.status(200).json({
+      status: 'success',
+      response
     });
   } catch (error) {
     res.status(400).json({
-      estado: "error",
-      mensaje: error.message,
+      status: "error",
+      message: error.message,
     });
   }
 };

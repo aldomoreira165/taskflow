@@ -31,7 +31,7 @@ const getById = async (req, res) => {
 
         const { ProyectoID } = req.params;
 
-        const response = await sequelize.query('SP_Proyectos_ListarPorID @ProyectoID = :ProyectoID', {
+        const response = await sequelize.query('EXEC SP_Proyectos_ListarPorID @ProyectoID = :ProyectoID', {
             type: QueryTypes.SELECT,
             plain: true,
             replacements: {
@@ -156,6 +156,25 @@ const remove = async (req, res) => {
     }
 };
 
+const getAll = async (req, res) => {
+    try {
+
+        const response = await sequelize.query('EXEC SP_Proyectos_ListarTodos', {
+            type: QueryTypes.SELECT
+        })
+
+        return res.status(200).json({
+            status: 'success',
+            response
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            status: "error",
+            message: error.message,
+        });
+    }
+}
 
 module.exports = {
     get,
@@ -163,4 +182,5 @@ module.exports = {
     create,
     update,
     remove,
+    getAll,
 }

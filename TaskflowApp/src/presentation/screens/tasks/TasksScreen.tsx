@@ -1,43 +1,57 @@
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, View } from "react-native"
-import { Header } from "../../components/ui/Header"
-import { CardContent } from "../../components/ui/CardContent"
-import { globalColors, globalStyles } from "../../theme/global.styles"
-import { useAuthStore } from "../../store/auth/useAuthStore"
-import FloatingActionButton from "../../components/ui/FloatingActionButton"
-import { useState } from "react"
+import { useState } from "react";
+import { NativeScrollEvent, NativeSyntheticEvent, Text, View } from "react-native";
+import { Header } from "../../components/ui/Header";
+import { CardContent } from "../../components/ui/CardContent";
+import { globalColors, globalStyles } from "../../theme/global.styles";
+import { useAuthStore } from "../../store/auth/useAuthStore";
+import FloatingActionButton from "../../components/ui/FloatingActionButton";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParams } from "../../navigation/StackNavigator";
+import { useQuery } from "@tanstack/react-query";
+
+import { TaskList } from "../../components/tasks/TaskList";
+import { getTasks } from "../../../actions/tasks/get-tasks";
 
 export const TasksScreen = () => {
 
     const { user } = useAuthStore();
+    const navigation = useNavigation<NavigationProp<RootStackParams>>();
+
     const [isExtended, setIsExtended] = useState(true);
+
+    const { isLoading, data: tasks = [] } = useQuery({
+        queryKey: ['tasks', user?.UsuarioID],
+        staleTime: 1000 * 60 * 5,
+        queryFn: () => getTasks(),
+        enabled: !!user,
+    });
 
     const onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
         const y = Math.floor(nativeEvent?.contentOffset?.y ?? 0);
         setIsExtended(y <= 0);
     };
 
-
     return (
         <View style={{ flex: 1, backgroundColor: globalColors.secondary }}>
+
             <Header>
                 <Text style={[globalStyles.mainTitle, { fontSize: 60 }]}>TaskFlow</Text>
-                <Text style={[globalStyles.mainSubtitle, { fontSize: 25, fontWeight: '400', marginBottom: 5 }]}>¡Hola, {user?.Nombre}! 👋</Text>
-                <Text style={globalStyles.mainSubtitle}>Te damos la bienvenida de nuevo</Text>
+                <Text style={[globalStyles.mainSubtitle, { fontSize: 25, fontWeight: '400', marginBottom: 5 }]}>
+                    ¡Hola, {user?.Nombre}! 👋
+                </Text>
+                <Text style={globalStyles.mainSubtitle}>Estas son tus tareas</Text>
             </Header>
 
             <CardContent>
-                <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ paddingBottom: 160 }}
+
+                <TaskList
+                    tasks={tasks}
+                    isLoading={isLoading}
                     onScroll={onScroll}
-                    scrollEventThrottle={16}
-                    nestedScrollEnabled
+                    scrollEventThrottle={1}
+                    contentContainerStyle={{ paddingBottom: 160 }}
                     showsVerticalScrollIndicator={false}
-                >
-
-
-
-                </ScrollView>
+                />
 
                 <FloatingActionButton
                     label="Nueva tarea"
@@ -46,10 +60,10 @@ export const TasksScreen = () => {
                     extended={isExtended}
                     style={{ bottom: 115, right: 0 }}
                     visible
-                    onPress={() => console.log('Nueva tarea')}
+                    onPress={() => navigation.navigate('TaskScreen', {})}
                 />
 
             </CardContent>
         </View>
-    )
-}
+    );
+};

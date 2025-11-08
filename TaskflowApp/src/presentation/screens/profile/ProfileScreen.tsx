@@ -41,12 +41,9 @@ export const ProfileScreen = () => {
 
           <Divider />
 
-          {/* Datos del empleado */}
           <View style={{ gap: 12 }}>
             <InfoRow label="Usuario" value={user?.Usuario ?? "—"} />
             <InfoRow label="Nombre" value={user?.Nombre ?? "—"} />
-            {/* <InfoRow label="Empresa" value={user?.EmpresaNombre ?? "—"} /> */}
-            {/* Agrega/quita filas según tu modelo */}
           </View>
 
           <CustomButton
@@ -60,13 +57,11 @@ export const ProfileScreen = () => {
           />
         </Layout>
 
-        {/* Botón cerrar sesión */}
       </CardContent>
     </View>
   );
 };
 
-/** Fila reutilizable de datos */
 const InfoRow = ({ label, value }: { label: string; value?: string }) => {
   return (
     <View

@@ -4,6 +4,7 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
 import { ProjectScreen } from '../screens/project/ProjectScreen';
+import { TaskScreen } from '../screens/tasks/TaskScreen';
 
 export type RootStackParams = {
   LoadingScreen: undefined;
@@ -11,6 +12,7 @@ export type RootStackParams = {
   RegisterScreen: undefined;
   ProjecstScreen: undefined;
   ProjectScreen: { projectID?: number | undefined };
+  TaskScreen: { taskID?: number | undefined };
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -35,6 +37,7 @@ export const StackNavigator = () => {
       <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ProjecstScreen" component={ BottomTabsNavigator } />
       <Stack.Screen name="ProjectScreen" component={ ProjectScreen } />
+      <Stack.Screen name="TaskScreen" component={ TaskScreen } />
     </Stack.Navigator>
   );
 }
