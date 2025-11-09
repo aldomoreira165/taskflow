@@ -9,7 +9,7 @@ export const getProjects = async () => {
         return data.response;
 
     } catch (error) {
-        console.log(error)        
+        throw error;
     }
 
 }
@@ -22,7 +22,7 @@ export const getAllProjects = async () => {
         return data.response;
 
     } catch (error) {
-        console.log(error)        
+        console.log(error)
     }
 
 }

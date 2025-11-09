@@ -16,6 +16,12 @@ const STATUS: Record<number, { label: string; color: string; bg: string }> = {
     3: { label: 'Completado', color: '#065F46', bg: '#D1FAE5' },
 };
 
+const getRoleBadge = (p: { EsCreador?: boolean; EsMiembro?: boolean }) => {
+    if (p.EsCreador) return { label: 'Creador', color: '#9A3412', bg: '#FFF7ED' };
+    if (p.EsMiembro) return { label: 'Miembro', color: '#1D4ED8', bg: '#EFF6FF' };
+    return null;
+};
+
 const getStatus = (estadoID: number) =>
     STATUS[estadoID ?? 1];
 
@@ -28,9 +34,8 @@ const formatDate = (dateProject: string) => {
 export const ProjectCard = ({ project }: Props) => {
 
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
-
     const statusProject = getStatus(project.EstadoID);
-
+    const role = getRoleBadge(project);
     const progress = 0.5;
 
     return (
@@ -55,13 +60,24 @@ export const ProjectCard = ({ project }: Props) => {
                         </Text>
                     </View>
 
-                    <Chip
-                        compact
-                        style={[styles.statusChip, { backgroundColor: statusProject.bg }]}
-                        textStyle={{ color: statusProject.color, fontWeight: '600' }}
-                    >
-                        {statusProject.label}
-                    </Chip>
+                    <View style={styles.badges}>
+                        {role && (
+                            <Chip
+                                compact
+                                style={[styles.chip, { backgroundColor: role.bg }]}
+                                textStyle={{ color: role.color, fontWeight: '600' }}
+                            >
+                                {role.label}
+                            </Chip>
+                        )}
+                        <Chip
+                            compact
+                            style={[styles.chip, { backgroundColor: statusProject.bg }]}
+                            textStyle={{ color: statusProject.color, fontWeight: '600' }}
+                        >
+                            {statusProject.label}
+                        </Chip>
+                    </View>
                 </View>
 
 
@@ -106,11 +122,12 @@ const styles = StyleSheet.create({
         color: '#111827',
         fontWeight: '500',
     },
-    statusChip: {
-        borderRadius: 999,
+    badges: {
+        flexDirection: 'row',
+        gap: 8,
     },
-    resp: {
-        color: '#6B7280',
+    chip: {
+        borderRadius: 999,
     },
     progress: {
         height: 8,

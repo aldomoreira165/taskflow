@@ -103,8 +103,10 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
 
+        console.log("req.body: ", req.body)        
+
         const { TareaID } = req.params;
-        const { Nombre, Descripcion, ProyectoID, PrioridadID, UsuarioAsignadoID, FechaInicio, FechaEntrega, CategoriaID } = req.body;
+        const { Nombre, Descripcion, ProyectoID, PrioridadID, UsuarioAsignadoID, FechaInicio, FechaEntrega, CategoriaID, EstadoID } = req.body;
 
 
         const query = `
@@ -117,7 +119,8 @@ const update = async (req, res) => {
                 @UsuarioAsignadoID = :UsuarioAsignadoID,
                 @FechaInicio = :FechaInicio,
                 @FechaEntrega = :FechaEntrega,
-                @CategoriaID = :CategoriaID
+                @CategoriaID = :CategoriaID,
+                @EstadoID = :EstadoID
         `;
 
         const response = await sequelize.query(query, {
@@ -132,7 +135,8 @@ const update = async (req, res) => {
                 UsuarioAsignadoID,
                 FechaInicio,
                 FechaEntrega,
-                CategoriaID
+                CategoriaID,
+                EstadoID
             }
         })
 

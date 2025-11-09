@@ -9,6 +9,8 @@ export interface Project {
   Descripcion: string;
   Miembros?: string;
   MiembrosUsuarioIDs?: number[];
+  EsCreador?: boolean,
+  EsMiembro?: boolean
 }
 
 export interface ProjectUpsertDTO {

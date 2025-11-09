@@ -24,6 +24,8 @@ export const ProjectScreen = ({ route }: Props) => {
     const { user } = useAuthStore();
     const projectIdRef = useRef<number | undefined>(route.params?.projectID);
     const queryClient = useQueryClient();
+    let disabled = false;
+
 
     const { data: project } = useQuery({
         queryKey: ['project', projectIdRef.current],
@@ -72,6 +74,12 @@ export const ProjectScreen = ({ route }: Props) => {
     const fmt = (d?: Date) =>
         d ? d.toLocaleDateString("es-GT", { year: "numeric", month: "2-digit", day: "2-digit" }) : "";
 
+    if (projectIdRef.current !== undefined) {
+        disabled = user?.UsuarioID !== project?.UsuarioCreadorID;
+    }
+
+    console.log("disabled: ", disabled)
+
     if (projectIdRef.current && !project) return <MainLayout title="cargando" />;
 
     return (
@@ -95,6 +103,7 @@ export const ProjectScreen = ({ route }: Props) => {
                                     value={values.Nombre}
                                     onChangeText={handleChange("Nombre")}
                                     style={{ marginVertical: 6 }}
+                                    disabled={disabled}
                                 />
 
                                 <Input
@@ -104,6 +113,7 @@ export const ProjectScreen = ({ route }: Props) => {
                                     style={{ marginVertical: 6 }}
                                     multiline
                                     textStyle={{ minHeight: 100 }}
+                                    disabled={disabled}
                                 />
 
                                 <Datepicker
@@ -115,6 +125,7 @@ export const ProjectScreen = ({ route }: Props) => {
                                     placement="bottom start"
                                     style={{ marginVertical: 6 }}
                                     min={new Date()}
+                                    disabled={disabled}
                                 />
 
                                 <Datepicker
@@ -127,6 +138,7 @@ export const ProjectScreen = ({ route }: Props) => {
                                     style={{ marginVertical: 6 }}
                                     min={values.FechaInicio}
                                     status={fechaEntregaInvalida ? "danger" : "basic"}
+                                    disabled={disabled}
                                     caption={
                                         fechaEntregaInvalida
                                             ? "La fecha de entrega no puede ser anterior a la de inicio."
@@ -152,6 +164,7 @@ export const ProjectScreen = ({ route }: Props) => {
                                             return labels.length ? labels.join(", ") : "—";
                                         })()
                                     }
+                                    disabled={disabled}
                                 >
                                     {users.map(u => (
                                         <SelectItem key={u.id} title={u.label} />
@@ -160,11 +173,13 @@ export const ProjectScreen = ({ route }: Props) => {
 
                                 <View style={{ height: 12 }} />
 
-                                <CustomButton
-                                    label={projectIdRef.current ? "Guardar cambios" : "Crear proyecto"}
-                                    onPress={() => handleSubmit()}
-                                    disabled={mutation.isPending}
-                                />
+                                {
+                                    !disabled && <CustomButton
+                                        label={projectIdRef.current ? "Guardar cambios" : "Crear proyecto"}
+                                        onPress={() => handleSubmit()}
+                                        disabled={mutation.isPending}
+                                    />
+                                }
 
                             </Layout>
                         </ScrollView>

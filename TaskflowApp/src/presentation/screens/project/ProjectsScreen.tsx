@@ -21,9 +21,12 @@ export const ProjecstScreen = () => {
 
   const { isLoading, data: projects = [] } = useQuery({
     queryKey: ['projects', user?.UsuarioID],
-    staleTime: 1000 * 60 * 5,
     queryFn: () => getProjects(),
-    enabled: !!user,
+    enabled: !!user?.UsuarioID,
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 
   const onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -41,6 +44,7 @@ export const ProjecstScreen = () => {
       </Header>
 
       <CardContent>
+
 
         <ProjectList
           projects={projects}

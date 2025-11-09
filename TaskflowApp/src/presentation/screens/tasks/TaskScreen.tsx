@@ -71,6 +71,7 @@ export const TaskScreen = ({ route }: Props) => {
       tareaIdRef.current = saved.TareaID;
       queryClient.invalidateQueries({ queryKey: ["tasks", user?.UsuarioID] });
       queryClient.invalidateQueries({ queryKey: ["task", saved.TareaID] });
+      queryClient.invalidateQueries({ queryKey: ["projects", user?.UsuarioID] });
     },
   });
 

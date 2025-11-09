@@ -14,22 +14,19 @@ interface Props {
 const STATUS: Record<number, { label: string; color: string; bg: string }> = {
     1: { label: 'Pendiente', color: '#374151', bg: '#E5E7EB' },
     2: { label: 'En progreso', color: '#6D28D9', bg: '#EDE9FE' },
-    3: { label: 'Bloqueada', color: '#92400E', bg: '#FEF3C7' },
-    4: { label: 'Completada', color: '#065F46', bg: '#D1FAE5' },
-    5: { label: 'Archivada', color: '#374151', bg: '#E5E7EB' },
+    3: { label: 'Completada', color: '#065F46', bg: '#E5E7EB' }
 };
 
 const PRIORITY: Record<number, { label: string; color: string; bg: string }> = {
     1: { label: 'Baja', color: '#065F46', bg: '#D1FAE5' },
     2: { label: 'Media', color: '#92400E', bg: '#FEF3C7' },
     3: { label: 'Alta', color: '#991B1B', bg: '#FEE2E2' },
-    4: { label: 'Crítica', color: '#6D28D9', bg: '#EDE9FE' },
 };
 
-const getStatus = (estadoID?: number) =>
+const getStatus = (estadoID?: number | null) =>
     STATUS[estadoID ?? 1] ?? STATUS[1];
 
-const getPriority = (prioridadID?: number) =>
+const getPriority = (prioridadID?: number | null) =>
     PRIORITY[prioridadID ?? 1] ?? PRIORITY[1];
 
 const formatDate = (dateStr?: string | Date) => {
@@ -39,19 +36,10 @@ const formatDate = (dateStr?: string | Date) => {
 };
 
 
-const calcProgress = (inicio?: string | Date, entrega?: string | Date, estadoID?: number) => {
-    const start = inicio ? new Date(inicio).getTime() : NaN;
-    const end = entrega ? new Date(entrega).getTime() : NaN;
-    const now = Date.now();
-
-    if (!isNaN(start) && !isNaN(end) && end > start) {
-        const pct = (now - start) / (end - start);
-        return Math.max(0, Math.min(1, pct));
-    }
-
-    if (estadoID === 4) return 1;
-    if (estadoID === 2) return 0.6;
-    return 0.15;
+const calcProgress = (estadoID?: number | null) => {
+    if (estadoID === 1) return 0;
+    else if (estadoID === 2) return 0.5;
+    else return 1;
 };
 
 export const TaskCard = ({ task }: Props) => {
@@ -59,11 +47,7 @@ export const TaskCard = ({ task }: Props) => {
 
     const statusTask = getStatus(task.EstadoID);
     const priorityTask = getPriority(task.PrioridadID);
-
-    const progress = useMemo(
-        () => calcProgress(task.FechaInicio as any, task.FechaEntrega as any, task.EstadoID),
-        [task.FechaInicio, task.FechaEntrega, task.EstadoID]
-    );
+    const progress = calcProgress(task.EstadoID);
 
     return (
         <Card

@@ -21,9 +21,12 @@ export const TasksScreen = () => {
 
     const { isLoading, data: tasks = [] } = useQuery({
         queryKey: ['tasks', user?.UsuarioID],
-        staleTime: 1000 * 60 * 5,
         queryFn: () => getTasks(),
-        enabled: !!user,
+        enabled: !!user?.UsuarioID,
+        refetchOnMount: 'always',
+        refetchOnWindowFocus: true,
+        refetchOnReconnect: true,
+        staleTime: 1000 * 60 * 5,
     });
 
     const onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { useQueryClient } from '@tanstack/react-query';
 import { Header } from "../../components/ui/Header";
 import { CardContent } from "../../components/ui/CardContent";
 import { CustomButton } from "../../components/ui/CustomButton";
@@ -11,6 +12,12 @@ import { CustomIcon } from "../../components/ui/CustomIcon";
 export const ProfileScreen = () => {
   const { user, logout } = useAuthStore();
   const theme = useTheme();
+  const queryClient = useQueryClient();
+
+  const logoutCache = async () => {
+    await logout();
+    queryClient.clear();
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: globalColors.secondary }}>
@@ -48,7 +55,7 @@ export const ProfileScreen = () => {
 
           <CustomButton
             label="Cerrar sesión"
-            onPress={logout}
+            onPress={logoutCache}
             style={{
               marginTop: 16,
               backgroundColor: globalColors.danger,
