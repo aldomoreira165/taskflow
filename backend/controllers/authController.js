@@ -65,8 +65,6 @@ const renew = async (req, res) => {
     try {
         const oldToken = getBearerToken(req);
 
-        console.log("oldToken: ", oldToken)
-
         if (!oldToken) {
             return res.status(401).json({ status: "error", message: "Token no provisto" });
         }

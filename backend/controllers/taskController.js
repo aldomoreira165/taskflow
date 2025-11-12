@@ -103,8 +103,6 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
 
-        console.log("req.body: ", req.body)        
-
         const { TareaID } = req.params;
         const { Nombre, Descripcion, ProyectoID, PrioridadID, UsuarioAsignadoID, FechaInicio, FechaEntrega, CategoriaID, EstadoID } = req.body;
 

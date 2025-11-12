@@ -12,7 +12,8 @@ export interface Response {
     UsuarioCreadorID: number;
     Descripcion: string;
     EsCreador: boolean,
-    EsMiembro: boolean
+    EsMiembro: boolean,
+    Porcentaje: number
 }
 
 export interface TaskFlowProduct {

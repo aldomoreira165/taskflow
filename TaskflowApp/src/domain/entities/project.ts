@@ -10,7 +10,8 @@ export interface Project {
   Miembros?: string;
   MiembrosUsuarioIDs?: number[];
   EsCreador?: boolean,
-  EsMiembro?: boolean
+  EsMiembro?: boolean,
+  Porcentaje: number
 }
 
 export interface ProjectUpsertDTO {

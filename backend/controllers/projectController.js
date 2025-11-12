@@ -6,8 +6,6 @@ const get = async (req, res) => {
 
         const UsuarioID = req.usuario.id;
 
-        console.log("UsuarioID: ", UsuarioID)
-
         const response = await sequelize.query('EXEC SP_Proyectos_Listar @UsuarioID = :UsuarioID', {
             type: QueryTypes.SELECT,
             replacements: {

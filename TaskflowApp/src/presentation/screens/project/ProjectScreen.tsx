@@ -78,8 +78,6 @@ export const ProjectScreen = ({ route }: Props) => {
         disabled = user?.UsuarioID !== project?.UsuarioCreadorID;
     }
 
-    console.log("disabled: ", disabled)
-
     if (projectIdRef.current && !project) return <MainLayout title="cargando" />;
 
     return (

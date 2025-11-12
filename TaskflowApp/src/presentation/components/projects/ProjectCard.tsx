@@ -36,7 +36,7 @@ export const ProjectCard = ({ project }: Props) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
     const statusProject = getStatus(project.EstadoID);
     const role = getRoleBadge(project);
-    const progress = 0.5;
+    const progress = Math.round(project.Porcentaje * 100);
 
     return (
         <Card
@@ -83,12 +83,12 @@ export const ProjectCard = ({ project }: Props) => {
 
                 <View style={{ marginTop: 6 }}>
                     <ProgressBar
-                        progress={progress}
+                        progress={progress/100}
                         style={styles.progress}
                         color={globalColors.primary}
                     />
                     <Text variant="labelSmall" style={styles.progressText}>
-                        {Math.round(progress * 100)}%
+                        {progress}%
                     </Text>
                 </View>
             </Card.Content>
